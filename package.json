@@ -1,0 +1,27 @@
+{
+  "name": "tetris",
+  "version": "1.0.0",
+  "description": "juego de tetris desarrollado en ts vitest",
+  "main": "index.js",
+  
+  "scripts": {
+    "test": "vitest run"
+},
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valenlacour/tetris.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/valenlacour/tetris/issues"
+  },
+  "homepage": "https://github.com/valenlacour/tetris#readme",
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11"
+  }
+}

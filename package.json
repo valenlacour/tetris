@@ -2,12 +2,11 @@
   "name": "tetris-tdd",
   "version": "1.0.0",
   "description": "Tetris con POO vía TDD - Paradigmas y Lenguajes de Programación II",
+  
   "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
-    "build": "tsc"
-  },
+    "test": "vitest run"
+  }
+,
   "devDependencies": {
     "@vitest/coverage-v8": "^2.0.5",
     "typescript": "^5.4.5",

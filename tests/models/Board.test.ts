@@ -97,8 +97,44 @@ describe("Board", () => {
     expect(after).toEqual(before);
   });
 
-  test.todo("lineCount refleja las líneas completas del tablero");
-  test.todo("al completarse una línea, se remueve y el resto baja una fila");
+  it("lineCount refleja las líneas completas del tablero", () => {
+    const board = new Board();
+    expect(board.lineCount()).toBe(0);
+    const fullRow = Array.from({ length: BOARD_WIDTH }, (_, x) => new Square(x, 7));
+    const partialRow = Array.from({ length: BOARD_WIDTH - 1 }, (_, x) => new Square(x, 12));
+    board.setOccupiedCells([...fullRow, ...partialRow]);
+    expect(board.lineCount()).toBe(1);
+  });
+
+  it("al completarse una línea, se remueve y el resto baja una fila", () => {
+    const board = new Board();
+    const fullRow = Array.from({ length: BOARD_WIDTH }, (_, x) => new Square(x, 10));
+    const cellAbove = new Square(3, 9);
+    board.setOccupiedCells([...fullRow, cellAbove]);
+    const cleared = board.clearCompletedLines();
+    expect(cleared).toBe(1);
+    const cells = board.getOccupiedCells();
+    expect(cells.length).toBe(1);
+    expect(cells[0].getX()).toBe(3);
+    expect(cells[0].getY()).toBe(10);
+    expect(board.lineCount()).toBe(0);
+  });
+
+  it("clearCompletedLines con varias líneas completas desplaza correctamente lo que queda arriba", () => {
+    const board = new Board();
+    const row10 = Array.from({ length: BOARD_WIDTH }, (_, x) => new Square(x, 10));
+    const row15 = Array.from({ length: BOARD_WIDTH }, (_, x) => new Square(x, 15));
+    const above = new Square(5, 5); // por encima de ambas -> baja 2
+    const between = new Square(2, 12); // entre las dos -> baja 1
+    board.setOccupiedCells([...row10, ...row15, above, between]);
+    const cleared = board.clearCompletedLines();
+    expect(cleared).toBe(2);
+    const cells = board.getOccupiedCells();
+    expect(cells.length).toBe(2);
+    const positions = cells.map((c) => [c.getX(), c.getY()]);
+    expect(positions).toEqual(expect.arrayContaining([[5, 7]]));
+    expect(positions).toEqual(expect.arrayContaining([[2, 13]]));
+  });
 
   it("isGameOver es true cuando no hay lugar para nuevas piezas", () => {
     const board = new Board();
@@ -146,15 +182,5 @@ describe("Board", () => {
     expect(board.getGameOver()).toBe(false);
     board.setGameOver(true);
     expect(board.getGameOver()).toBe(true);
-  });
-
-  it("lineCount todavía no está implementado (Épica 5)", () => {
-    const board = new Board();
-    expect(() => board.lineCount()).toThrow();
-  });
-
-  it("clearCompletedLines todavía no está implementado (Épica 5)", () => {
-    const board = new Board();
-    expect(() => board.clearCompletedLines()).toThrow();
   });
 });

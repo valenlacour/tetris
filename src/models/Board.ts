@@ -178,7 +178,7 @@ export class Board {
 
   private topOffsetY(piece: PieceBase): number {
     const minY = Math.min(...piece.getSquares().map((s) => s.getY()));
-    return -minY;
+    return -minY || 0; // evita devolver -0 cuando minY es 0 (rompe toBe(0) en los tests)
   }
 
   private canPlace(piece: PieceBase, position: Square): boolean {

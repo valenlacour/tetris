@@ -78,6 +78,7 @@ describe("Board", () => {
     const board = new Board();
     board.setRandom(() => 0);
     board.addPiece(new PieceT());
+    board.moveDown(); // libera espacio arriba para poder rotar
     const before = board.getCurrentPiece()!.getSquares().map((s) => [s.getX(), s.getY()]);
     const rotated = board.rotateCurrentLeft();
     expect(rotated).toBe(true);

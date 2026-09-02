@@ -117,4 +117,44 @@ describe("Board", () => {
     expect(added).toBe(false);
     expect(board.getCurrentPiece()).toBeNull();
   });
+
+  it("getWidth/setWidth y getHeight/setHeight exponen el tamaño configurable del tablero", () => {
+    const board = new Board();
+    board.setWidth(12);
+    board.setHeight(24);
+    expect(board.getWidth()).toBe(12);
+    expect(board.getHeight()).toBe(24);
+  });
+
+  it("getPieces devuelve las piezas agregadas al tablero", () => {
+    const board = new Board();
+    board.setRandom(() => 0);
+    const piece = new PieceSquare();
+    board.addPiece(piece);
+    expect(board.getPieces()).toContain(piece);
+  });
+
+  it("getRandom/setRandom exponen la función de aleatoriedad inyectada", () => {
+    const board = new Board();
+    const random = () => 0.42;
+    board.setRandom(random);
+    expect(board.getRandom()).toBe(random);
+  });
+
+  it("getGameOver refleja el estado de fin de juego", () => {
+    const board = new Board();
+    expect(board.getGameOver()).toBe(false);
+    board.setGameOver(true);
+    expect(board.getGameOver()).toBe(true);
+  });
+
+  it("lineCount todavía no está implementado (Épica 5)", () => {
+    const board = new Board();
+    expect(() => board.lineCount()).toThrow();
+  });
+
+  it("clearCompletedLines todavía no está implementado (Épica 5)", () => {
+    const board = new Board();
+    expect(() => board.clearCompletedLines()).toThrow();
+  });
 });

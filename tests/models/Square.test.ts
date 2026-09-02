@@ -14,4 +14,12 @@ describe("Square", () => {
     expect(a.equals(b)).toBe(true);
     expect(a.equals(c)).toBe(false);
   });
+
+  it("setX/setY permiten mover el square a otras coordenadas", () => {
+    const s = new Square(0, 0);
+    s.setX(5);
+    s.setY(-3);
+    expect(s.getX()).toBe(5);
+    expect(s.getY()).toBe(-3);
+  });
 });

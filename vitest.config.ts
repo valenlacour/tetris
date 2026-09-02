@@ -9,6 +9,9 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "html"],
       include: ["src/**/*.ts"],
+      // IRotator.ts es una interfaz pura (sin codigo ejecutable en runtime);
+      // pedirle cobertura no tiene sentido y arrastraba el promedio general.
+      exclude: ["src/interfaces/**"],
       thresholds: {
         statements: 90,
         branches: 90,

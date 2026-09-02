@@ -19,4 +19,12 @@ describe("PieceSquare", () => {
     const after = piece.getSquares().map((s) => [s.getX(), s.getY()]);
     expect(after).toEqual(before);
   });
+
+  it("tampoco cambia de forma al rotar a la derecha (pieza simétrica)", () => {
+    const piece = new PieceSquare();
+    const before = piece.getSquares().map((s) => [s.getX(), s.getY()]);
+    piece.rotateRight();
+    const after = piece.getSquares().map((s) => [s.getX(), s.getY()]);
+    expect(after).toEqual(before);
+  });
 });

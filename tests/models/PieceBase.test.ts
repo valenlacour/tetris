@@ -6,6 +6,10 @@ class PieceTestDouble extends PieceBase {
   constructor(squares: Square[]) {
     super("TestDouble", squares);
   }
+
+  renameTo(name: string): void {
+    this.setName(name);
+  }
 }
 
 describe("PieceBase", () => {
@@ -36,5 +40,16 @@ describe("PieceBase", () => {
           new Square(2, 2),
         ])
     ).toThrow("Una pieza debe estar compuesta por exactamente 4 squares");
+  });
+
+  it("setName (protegido) permite renombrar la pieza desde una subclase", () => {
+    const piece = new PieceTestDouble([
+      new Square(0, 0),
+      new Square(1, 0),
+      new Square(0, 1),
+      new Square(1, 1),
+    ]);
+    piece.renameTo("Renombrada");
+    expect(piece.getName()).toBe("Renombrada");
   });
 });

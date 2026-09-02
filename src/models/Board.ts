@@ -140,18 +140,19 @@ export class Board {
 
   /**
    * Devuelve cuántas líneas están completas actualmente.
-   * TODO (Épica 5 / Requerimiento 5): no forma parte de esta entrega.
    */
   lineCount(): number {
-    throw new Error("TODO: implementar lineCount siguiendo TDD");
+    return this.completedRows().length;
   }
 
   /**
-   * Elimina las líneas completas y baja el resto de las celdas.
-   * TODO (Épica 5 / Requerimiento 5): no forma parte de esta entrega.
+   * Elimina las líneas completas y baja el resto de las celdas
+   * para ocupar el hueco dejado (Requerimiento 5).
    */
   clearCompletedLines(): number {
-    throw new Error("TODO: implementar clearCompletedLines siguiendo TDD");
+    const completedRows = this.completedRows();
+    this.setOccupiedCells(this.dropRows(completedRows));
+    return completedRows.length;
   }
 
   /**
@@ -206,5 +207,26 @@ export class Board {
     if (this.canPlace(this._currentPiece, this._currentPosition)) return true;
     undo();
     return false;
+  }
+
+  private completedRows(): number[] {
+    const rows = Array.from({ length: this._height }, (_, y) => y);
+    return rows.filter((y) => this.isRowComplete(y));
+  }
+
+  private isRowComplete(y: number): boolean {
+    const cellsInRow = this._occupiedCells.filter((c) => c.getY() === y).length;
+    return cellsInRow === this._width;
+  }
+
+  private dropRows(completedRows: number[]): Square[] {
+    return this._occupiedCells
+      .filter((c) => !completedRows.includes(c.getY()))
+      .map((c) => this.shiftDown(c, completedRows));
+  }
+
+  private shiftDown(cell: Square, completedRows: number[]): Square {
+    const linesBelow = completedRows.filter((row) => row > cell.getY()).length;
+    return new Square(cell.getX(), cell.getY() + linesBelow);
   }
 }
